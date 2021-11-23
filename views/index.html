@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>go-echo-bbs</title>
+</head>
+<body>
+  <h1>go-echo-bbs</h1>
+
+  <form action="/messages" method="post">
+    <input type="text" name="message" placeholder="発言" />
+    <button type="submit">送信</button>
+  </form>
+
+  <ul>
+      {{ range $index, $message := .Messages }}
+      <li>{{ $message.CreatedAt }}: {{ $message.Message }}</li>
+      {{ end }}
+  </ul>
+</body>
+</html>
