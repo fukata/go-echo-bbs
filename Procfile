@@ -1,1 +1,1 @@
-web: ./go-echo-bbs
+web: bin/go-echo-bbs
