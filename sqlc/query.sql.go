@@ -25,7 +25,7 @@ func (q *Queries) CreateThreadMessage(ctx context.Context, arg CreateThreadMessa
 }
 
 const getThreadMessages = `-- name: GetThreadMessages :many
-select id, message, created_at from thread_messages order by id limit $1
+select id, message, created_at from thread_messages order by id desc limit $1
 `
 
 func (q *Queries) GetThreadMessages(ctx context.Context, limit int32) ([]ThreadMessage, error) {
