@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/jackc/pgx/v4/stdlib"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -33,6 +34,18 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 }
 
 func main() {
+	// 開発環境の場合のみ `.env` を読み込む
+	environment := os.Getenv("GO_ENV")
+	if environment == "" || environment == "development" {
+		err := godotenv.Load()
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	/**
+	データベース接続
+	 */
 	pgx, err := sql.Open("pgx", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		panic(err)
