@@ -16,5 +16,6 @@ func main() {
 	if port == "" {
 		port = "1323"
 	}
+	e.Logger.Infof("Start Server PORT=%s", port)
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", port)))
 }
