@@ -4,6 +4,7 @@ module go-echo-bbs
 go 1.17
 
 require (
+	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
 	github.com/jackc/pgx/v4 v4.14.0
 	github.com/joho/godotenv v1.4.0
 	github.com/labstack/echo/v4 v4.6.1
@@ -11,6 +12,7 @@ require (
 )
 
 require (
+	github.com/asaskevich/govalidator v0.0.0-20200108200545-475eaeb16496 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.10.1 // indirect

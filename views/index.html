@@ -5,10 +5,18 @@
     <title>go-echo-bbs</title>
 </head>
 <body>
-  <h1>go-echo-bbs</h1>
+  <h1>
+      <a href="/">go-echo-bbs</a>
+  </h1>
+
+  {{ if .Error }}
+  <div>
+     <p style="color: red; font-weight: bold;">{{ .Error }}</p>
+  </div>
+  {{ end }}
 
   <form action="/messages" method="post">
-    <input type="text" name="message" placeholder="発言" />
+    <input type="text" name="message" placeholder="発言" minlength="1" maxlength="100" />
     <button type="submit">送信</button>
   </form>
 

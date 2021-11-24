@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/go-ozzo/ozzo-validation/v4"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
@@ -45,7 +46,7 @@ func main() {
 
 	/**
 	データベース接続
-	 */
+	*/
 	pgx, err := sql.Open("pgx", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		panic(err)
@@ -63,7 +64,7 @@ func main() {
 
 	/**
 	ルーティング
-	 */
+	*/
 	e.GET("/", func(context echo.Context) error {
 		messages, err := q.GetThreadMessages(ctx, 100)
 		if err != nil {
@@ -77,13 +78,20 @@ func main() {
 	})
 	e.POST("/messages", func(context echo.Context) error {
 		messageText := context.FormValue("message")
-		if len(messageText) == 0 {
-			e.Logger.Warn("message value is empty")
-			return context.Redirect(http.StatusMovedPermanently, "/")
+		err := validation.Validate(messageText,
+			validation.Required,
+			validation.Length(1, 100),
+		)
+		if err != nil {
+			e.Logger.Warn(err)
+			return context.Render(http.StatusBadRequest, "index.html", map[string]interface{}{
+				"Messages": []sqlc.ThreadMessage{},
+				"Error":    err,
+			})
 		}
 
 		params := sqlc.CreateThreadMessageParams{
-			Message: messageText,
+			Message:   messageText,
 			CreatedAt: time.Now(),
 		}
 		message, err := q.CreateThreadMessage(ctx, params)
@@ -96,7 +104,7 @@ func main() {
 
 	/**
 	起動
-	 */
+	*/
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "1323"
