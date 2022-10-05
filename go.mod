@@ -8,7 +8,7 @@ require (
 	github.com/jackc/pgx/v4 v4.17.0
 	github.com/joho/godotenv v1.4.0
 	github.com/labstack/echo/v4 v4.8.0
-	github.com/labstack/gommon v0.3.1
+	github.com/labstack/gommon v0.4.0
 )
 
 require (
